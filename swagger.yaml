@@ -1,0 +1,126 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Contact Management System API
+  description: API for managing contacts
+
+basePath: /api/
+
+tags:
+  - name: Contact
+    description: Operations related to contacts
+
+paths:
+  /api/contact/newContact:
+    post:
+      tags:
+        - Contact
+      summary: Add a new contact
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: name
+          in: formData
+          type: string
+          description: Name of the contact
+          required: true
+        - name: phoneNumber
+          in: formData
+          type: number
+          description: Phone number of the contact
+          required: true
+        - name: email
+          in: formData
+          type: string
+          description: Email of the contact
+          required: true
+        - name: profilePicture
+          in: formData
+          type: file
+          description: Profile picture of the contact
+          required: true
+      responses:
+        200:
+          description: Successfully added contact
+          schema:
+            $ref: "#/definitions/Contact"
+
+  /api/contact/getContact:
+    get:
+      tags:
+        - Contact
+      summary: Get all contacts
+      responses:
+        200:
+          description: Successfully fetched contacts
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Contact"
+
+  /api/contact/updateContact/{contactId}:
+    patch:
+      tags:
+        - Contact
+      summary: Update existing contact
+      consumes:
+        - application/json
+      parameters:
+        - name: contactId
+          in: path
+          type: string
+          required: true
+        - in: body
+          name: update
+          description: update object
+          required: true
+          schema:
+            $ref: "#/definitions/Update"
+      responses:
+        200:
+          description: Successfully updated contact
+          schema:
+            $ref: "#/definitions/Contact"
+
+  /api/contact/deleteContact/{contactId}:
+    delete:
+      tags:
+        - Contact
+      summary: Delete a contact by ID
+      parameters:
+        - name: contactId
+          in: path
+          type: string
+          required: true
+      responses:
+        200:
+          description: Successfully deleted contact
+          schema:
+            $ref: "#/definitions/Contact"
+
+definitions:
+  Contact:
+    type: object
+    properties:
+      _id:
+        type: string
+      name:
+        type: string
+      phoneNumber:
+        type: number
+      email:
+        type: string
+      profilePicture:
+        type: string
+  Update:
+    type: object
+    properties:
+      name:
+        type: string
+      phoneNumber:
+        type: number
+      email:
+        type: string

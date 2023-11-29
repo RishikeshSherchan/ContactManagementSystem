@@ -4,19 +4,19 @@ const contactSchema = new Schema(
   {
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     phoneNumber: {
       type: Number,
-      require: true,
+      required: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
     },
     profilePicture: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   { timestamps: true }
